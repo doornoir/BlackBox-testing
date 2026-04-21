@@ -143,6 +143,34 @@ class TestCreditCardValidator(unittest.TestCase):
         """
         self.assertFalse(credit_card_validator("3700000000000002"))
 
+    def test_prefix_2221_wrong_length(self):
+        """Verifies a MasterCard prefix 2221 with incorrect length fails.
+        Selected using Boundary Testing: valid prefix but invalid length.
+        """
+        self.assertFalse(credit_card_validator("222100000000000"))
 
+    def test_prefix_4_wrong_length_15(self):
+        """Verifies Visa prefix with length 15 fails.
+        Selected using Partition Testing: valid prefix, invalid length.
+        """
+        self.assertFalse(credit_card_validator("400000000000000"))
+
+    def test_amex_valid_prefix_bad_checksum_variant(self):
+        """Verifies AmEx with correct prefix but different invalid checksum fails.
+        Selected using Error Guessing to test alternative checksum failure.
+        """
+        self.assertFalse(credit_card_validator("370000000000001"))
+
+    def test_mastercard_valid_range_wrong_length_and_checksum(self):
+        """Verifies MasterCard in valid range but wrong length and checksum fails.
+        Selected using Error Guessing combining multiple invalid properties.
+        """
+        self.assertFalse(credit_card_validator("51000000000000"))
+
+    def test_mastercard_2221_length_15(self):
+        """Verifies MasterCard prefix 2221 with length 15 fails.
+        Selected using Boundary Testing across issuer-specific lengths.
+        """
+    self.assertFalse(credit_card_validator("222100000000000"))
 if __name__ == "__main__":
     unittest.main()
