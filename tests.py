@@ -171,6 +171,6 @@ class TestCreditCardValidator(unittest.TestCase):
         """Verifies MasterCard prefix 2221 with length 15 fails.
         Selected using Boundary Testing across issuer-specific lengths.
         """
-    self.assertFalse(credit_card_validator("222100000000000"))
+        self.assertFalse(credit_card_validator("222100000000000"))
 if __name__ == "__main__":
     unittest.main()
