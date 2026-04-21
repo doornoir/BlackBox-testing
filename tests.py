@@ -172,5 +172,31 @@ class TestCreditCardValidator(unittest.TestCase):
         Selected using Boundary Testing across issuer-specific lengths.
         """
         self.assertFalse(credit_card_validator("222100000000000"))
+
+    def test_empty_string_explicit(self):
+        """Verifies empty string is invalid.
+        Selected using Error Guessing for extreme invalid input.
+        """
+        self.assertFalse(credit_card_validator(""))
+
+    def test_visa_valid_prefix_length_10(self):
+        """Verifies Visa with very short length fails.
+        Selected using Boundary Testing far below valid length.
+        """
+        self.assertFalse(credit_card_validator("4000000000"))
+
+    def test_mastercard_prefix_only_valid(self):
+        """Verifies MasterCard prefix without proper length fails.
+        Selected using Error Guessing: prefix alone should not validate.
+        """
+        self.assertFalse(credit_card_validator("51"))
+
+    def test_amex_prefix_only(self):
+        """Verifies AmEx prefix alone fails.
+        Selected using Error Guessing to ensure full validation is required.
+        """
+        self.assertFalse(credit_card_validator("34"))
+
+
 if __name__ == "__main__":
     unittest.main()
