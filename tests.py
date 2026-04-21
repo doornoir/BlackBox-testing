@@ -13,25 +13,25 @@ class TestCreditCardValidator(unittest.TestCase):
 
     def test_valid_mastercard_51(self):
         """Verifies a valid MasterCard with prefix 51 returns True.
-        Selected using Boundary Value Testing at the lower bound of 51–55 range.
+        Selected using Boundary Value Testing at the lower bound of 51–55.
         """
         self.assertTrue(credit_card_validator("5100000000000008"))
 
     def test_valid_mastercard_55(self):
         """Verifies a valid MasterCard with prefix 55 returns True.
-        Selected using Boundary Value Testing at the upper bound of 51–55 range.
+        Selected using Boundary Value Testing at the upper bound of 51–55.
         """
         self.assertTrue(credit_card_validator("5500000000000004"))
 
     def test_valid_mastercard_2221(self):
         """Verifies a valid MasterCard with prefix 2221 returns True.
-        Selected using Boundary Value Testing at the lower bound of 2221–2720 range.
+        Selected using Boundary Value Testing at the lower bound of 2221–2720.
         """
         self.assertTrue(credit_card_validator("2221000000000009"))
 
     def test_valid_mastercard_2720(self):
         """Verifies a valid MasterCard with prefix 2720 returns True.
-        Selected using Boundary Value Testing at the upper bound of 2221–2720 range.
+        Selected using Boundary Value Testing at the upper bound of 2221–2720.
         """
         self.assertTrue(credit_card_validator("2720000000000005"))
 
@@ -174,14 +174,15 @@ class TestCreditCardValidator(unittest.TestCase):
         self.assertFalse(credit_card_validator("222100000000000"))
 
     def test_invalid_amex_wrong_prefix_3x(self):
-        """Verifies numbers starting with 3 but not 34 or 37 are invalid.
-        Selected using Partition Testing to ensure strict prefix validation.
+        """Verifies that numbers starting with 3 but not 34 or 37 are invalid.
+        Selected using Partition Testing to ensure only valid AmEx prefixes (34, 37)
+        are accepted and all other 3x prefixes are rejected.
         """
         self.assertFalse(credit_card_validator("3100000000000005"))
 
     def test_invalid_amex_prefix_38(self):
-        """Verifies prefix 38 is invalid for AmEx.
-        Selected using Boundary Testing around valid prefixes.
+        """Verifies that prefix 38 is not a valid AmEx prefix.
+        Selected using Boundary Testing around valid AmEx prefixes (34 and 37).
         """
         self.assertFalse(credit_card_validator("3800000000000000"))
 
